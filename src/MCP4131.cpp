@@ -9,19 +9,21 @@
 #include "MCP4131.h"
 #include <SPI.h>
 
-MCP4131::MCP4131(int slave_select_pin) {
+int slaveSelectPin;
+
+MCP4131::MCP4131(int slavePin) {
     SPI.begin();
-    
-	pinMode(slave_select_pin, OUTPUT);
+    slaveSelectPin = slavePin;
+	pinMode(slavePin, OUTPUT);
 }
 
-MCP4131::readWiper() {
-    SPI.beginTransaction(settingsA);
-    Serial.println("Entered Read");
+byte MCP4131::readWiper() {
+    SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
     // take the SS pin low to select the chip:
     digitalWrite(slaveSelectPin, LOW);
     //  send in the address and value via SPI:
     byte error = SPI.transfer(0x0F);
+    checkIfError(error);
     byte result = SPI.transfer(0xFF);
     //unsigned int result = SPI.transfer(0xC);
     // take the SS pin high to de-select the chip:
@@ -30,11 +32,11 @@ MCP4131::readWiper() {
     Serial.println(error);
     Serial.println(result);
     
+    return result;
 }
 
-MCP4131::checkIfError(byte error_byte) {
-
-	boolean error_bool = (error_byte & error_mask) << 1;
-
-	return error_bool;
+boolean checkIfError(byte errorByte) {
+    boolean errorBoolean = (errorByte & 0x02) >> 1;
+    Serial.println(errorBoolean);
+    
 }
