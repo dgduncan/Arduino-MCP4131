@@ -27,6 +27,7 @@ class MCP4131
     private:
         byte error_mask = 0x02;
         boolean checkIfError(byte errorByte);
+        void sendCommand();
 
 };
 

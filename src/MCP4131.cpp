@@ -17,34 +17,42 @@ MCP4131::MCP4131(int slavePin) {
 	pinMode(slavePin, OUTPUT);
 }
 
-boolean MCP4131::checkIfError(byte errorByte) {
-    boolean errorBoolean = (errorByte & 0x02) >> 1;
-    return !errorBoolean;
-}
-
 byte MCP4131::readWiper() {
+    // Adjust SPI settings to fit MCP4131
     SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
+    
     // take the SS pin low to select the chip:
     digitalWrite(slaveSelectPin, LOW);
-    //  send in the address and value via SPI:
+    
+    // Send the MSB of the 16bit read command to receive CMDR bit to check
     byte error = SPI.transfer(0x0F);
-    Serial.println(checkIfError(error));
-    checkIfError(error);
+
+    //if(checkIfError(error))
+    //    return;
+        
+    // Send LSB to retrieve the value of the Wiper
     byte result = SPI.transfer(0xFF);
-    //unsigned int result = SPI.transfer(0xC);
+    
     // take the SS pin high to de-select the chip:
     digitalWrite(slaveSelectPin, HIGH);
     SPI.endTransaction();
+    
     Serial.println(error);
     Serial.println(result);
     
     return result;
 }
 
-
-=======
-boolean checkIfError(byte errorByte) {
-    boolean errorBoolean = (errorByte & 0x02) >> 1;
-    Serial.println(errorBoolean);
+void MCP4131::sendCommand() {
+    // Adjust SPI settings to fit MCP4131
+    SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
     
+    // take the SS pin low to select the chip:
+    digitalWrite(slaveSelectPin, LOW);
+    
+}
+
+boolean MCP4131::checkIfError(byte errorByte) {
+    boolean errorBoolean = (errorByte & 0x02) >> 1;
+    return !errorBoolean;
 }
