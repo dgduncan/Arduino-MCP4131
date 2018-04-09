@@ -15,11 +15,14 @@ MCP4131::MCP4131(int slavePin) {
     SPI.begin();
     slaveSelectPin = slavePin;
 	pinMode(slavePin, OUTPUT);
+<<<<<<< HEAD
 }
 
 boolean MCP4131::checkIfError(byte errorByte) {
     boolean errorBoolean = (errorByte & 0x02) >> 1;
     return !errorBoolean;
+=======
+>>>>>>> c4862213d728604b5b04cfc44df1e49596d61e81
 }
 
 byte MCP4131::readWiper() {
@@ -28,7 +31,11 @@ byte MCP4131::readWiper() {
     digitalWrite(slaveSelectPin, LOW);
     //  send in the address and value via SPI:
     byte error = SPI.transfer(0x0F);
+<<<<<<< HEAD
     Serial.println(checkIfError(error));
+=======
+    checkIfError(error);
+>>>>>>> c4862213d728604b5b04cfc44df1e49596d61e81
     byte result = SPI.transfer(0xFF);
     //unsigned int result = SPI.transfer(0xC);
     // take the SS pin high to de-select the chip:
@@ -40,4 +47,12 @@ byte MCP4131::readWiper() {
     return result;
 }
 
+<<<<<<< HEAD
 
+=======
+boolean checkIfError(byte errorByte) {
+    boolean errorBoolean = (errorByte & 0x02) >> 1;
+    Serial.println(errorBoolean);
+    
+}
+>>>>>>> c4862213d728604b5b04cfc44df1e49596d61e81
