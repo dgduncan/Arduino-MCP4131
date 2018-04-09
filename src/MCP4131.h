@@ -26,11 +26,8 @@ class MCP4131
 
     private:
         byte error_mask = 0x02;
-<<<<<<< HEAD
         boolean checkIfError(byte errorByte);
-=======
-        boolean checkIfError(byte error_byte);
->>>>>>> c4862213d728604b5b04cfc44df1e49596d61e81
+
 };
 
 #endif
