@@ -9,7 +9,6 @@
 #define MCP4131_H
 
 #include "Arduino.h"
-#include <SPI.h>
 
 class MCP4131
 {
@@ -27,8 +26,7 @@ class MCP4131
 
     private:
         byte error_mask = 0x02;
-
-        boolean checkIfError(byte error_byte);
+        boolean checkIfError(byte errorByte);
 };
 
 #endif
