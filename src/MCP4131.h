@@ -25,9 +25,19 @@ class MCP4131
 	  // void displaySaver();
 
     private:
-        byte error_mask = 0x02;
+        const static byte error_mask = 0x02;
+        const static byte address_wiper = 0x0;
+    
+        const static unsigned char command_write = B00;
+        const static unsigned char command_read = B11;
+        const static unsigned char command_increment = B01;
+        const static unsigned char command_decrement = B10;
+    
         boolean checkIfError(byte errorByte);
         void sendCommand();
+        void enableChip();
+        void disableChip();
+    
 
 };
 

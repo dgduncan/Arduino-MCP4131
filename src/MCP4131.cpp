@@ -22,7 +22,7 @@ byte MCP4131::readWiper() {
     SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
     
     // take the SS pin low to select the chip:
-    digitalWrite(slaveSelectPin, LOW);
+    enableChip();
     
     // Send the MSB of the 16bit read command to receive CMDR bit to check
     byte error = SPI.transfer(0x0F);
@@ -34,7 +34,7 @@ byte MCP4131::readWiper() {
     byte result = SPI.transfer(0xFF);
     
     // take the SS pin high to de-select the chip:
-    digitalWrite(slaveSelectPin, HIGH);
+    disableChip();
     SPI.endTransaction();
     
     Serial.println(error);
@@ -48,8 +48,16 @@ void MCP4131::sendCommand() {
     SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
     
     // take the SS pin low to select the chip:
-    digitalWrite(slaveSelectPin, LOW);
+    enableChip();
     
+}
+
+void MCP4131::enableChip() {
+    digitalWrite(slaveSelectPin, LOW);
+}
+
+void MCP4131::disableChip() {
+    digitalWrite(slaveSelectPin, HIGH);
 }
 
 boolean MCP4131::checkIfError(byte errorByte) {
