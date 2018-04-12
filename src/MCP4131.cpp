@@ -43,12 +43,16 @@ byte MCP4131::readWiper() {
     return result;
 }
 
-void MCP4131::sendCommand() {
+void MCP4131::sendCommand(byte address, byte command, byte data) {
     // Adjust SPI settings to fit MCP4131
     SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
     
     // take the SS pin low to select the chip:
     enableChip();
+    
+    msb = ((address & address_mask) << 4) | ((command & command_mask) << 2);
+    
+    byte error = SPI.transfer(0x0F);
     
 }
 
