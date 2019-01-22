@@ -15,7 +15,9 @@ class MCP4131
     public:
         MCP4131(int slave_select_pin);
         byte readWiper();
-        void writeWiper();
+        byte writeWiper();
+		void sendCommand(/*byte address, byte command, byte data*/);
+
 
      // SegmentDisplay(int pin1, int pin2, int pin4, int pin5, int pin6, int pin7, int pin9, int pin10);
      // void displayDecimalPoint();
@@ -34,7 +36,6 @@ class MCP4131
         const static unsigned char command_decrement = B10;
     
         boolean checkIfError(byte errorByte);
-        void sendCommand();
         void enableChip();
         void disableChip();
     
