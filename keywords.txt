@@ -1,4 +1,5 @@
 MCP4131	KEYWORD1
 readWiper	KEYWORD2
-writeWiper KEYWORD2
-decrement KEYWORD2
+writeWiper	KEYWORD2
+decrement   KEYWORD2
+increment   KEYWORD2

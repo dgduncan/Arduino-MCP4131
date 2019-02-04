@@ -15,8 +15,7 @@ class MCP4131
     public:
         MCP4131(int slave_select_pin);
         byte readWiper();
-        byte writeWiper();
-		void sendCommand(byte address, char command);
+        byte writeWiper(unsigned int wiperValue);
         void decrement();
         void increment();
 
@@ -28,15 +27,17 @@ class MCP4131
         const static byte ADDRESS_WIPER1 = 0x1;
         const static byte COMMAND_MASK = 0x00;
     
-        const static unsigned char command_write = B00;
-        const static unsigned char command_read = B11;
+        const static unsigned char COMMAND_WRITE = B00;
+        const static unsigned char COMMAND_READ = B11;
         const static unsigned char COMMAND_INCREMENT = B01;
         const static unsigned char COMMAND_DECREMENT = B10;
     
         boolean checkIfError(byte errorByte);
         void enableChip();
         void disableChip();
-        void sendCommand(byte address, byte command, byte data);
+        void sendCommand(byte address, char command, unsigned int data);
+        void sendCommand(byte address, char command);
+
     
 
 };
