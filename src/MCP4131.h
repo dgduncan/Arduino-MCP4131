@@ -16,28 +16,27 @@ class MCP4131
         MCP4131(int slave_select_pin);
         byte readWiper();
         byte writeWiper();
-		void sendCommand(/*byte address, byte command, byte data*/);
+		void sendCommand(byte address, char command);
+        void decrement();
+        void increment();
 
 
-     // SegmentDisplay(int pin1, int pin2, int pin4, int pin5, int pin6, int pin7, int pin9, int pin10);
-     // void displayDecimalPoint();
-     // void displayHex(int numberToDisplay, boolean decimalPointFlag);
-     // void testDisplay();
-      // Not ready
-	  // void displaySaver();
 
     private:
         const static byte error_mask = 0x02;
-        const static byte address_wiper = 0x0;
+        const static byte ADDRESS_WIPER0 = 0x0;
+        const static byte ADDRESS_WIPER1 = 0x1;
+        const static byte COMMAND_MASK = 0x00;
     
         const static unsigned char command_write = B00;
         const static unsigned char command_read = B11;
-        const static unsigned char command_increment = B01;
-        const static unsigned char command_decrement = B10;
+        const static unsigned char COMMAND_INCREMENT = B01;
+        const static unsigned char COMMAND_DECREMENT = B10;
     
         boolean checkIfError(byte errorByte);
         void enableChip();
         void disableChip();
+        void sendCommand(byte address, byte command, byte data);
     
 
 };
