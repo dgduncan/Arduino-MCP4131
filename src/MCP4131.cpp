@@ -18,29 +18,29 @@ MCP4131::MCP4131(int slavePin) {
 }
 
 byte MCP4131::readWiper() {
-    // Adjust SPI settings to fit MCP4131
-    SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
+    sendCommand(ADDRESS_WIPER0, COMMAND_READ, 255);
+    // // Adjust SPI settings to fit MCP4131
+    // SPI.beginTransaction(SPISettings(250000, MSBFIRST, SPI_MODE0));
     
-    // take the SS pin low to select the chip:
-    enableChip();
+    // // take the SS pin low to select the chip:
+    // enableChip();
     
-    // Send the MSB of the 16bit read command to receive CMDR bit to check
-    byte error = SPI.transfer(0x0F);
+    // // Send the MSB of the 16bit read command to receive CMDR bit to check
+    // byte error = SPI.transfer(0x0F);
 
-    //if(checkIfError(error))
-    //    return;
+    // //if(checkIfError(error))
+    // //    return;
         
-    // Send LSB to retrieve the value of the Wiper
-    byte result = SPI.transfer(0xFF);
+    // // Send LSB to retrieve the value of the Wiper
+    // byte result = SPI.transfer(0xFF);
     
-    // take the SS pin high to de-select the chip:
-    disableChip();
-    SPI.endTransaction();
+    // // take the SS pin high to de-select the chip:
+    // disableChip();
+    // SPI.endTransaction();
     
-    Serial.println(error);
-    Serial.println(result);
+    // Serial.println(result);
     
-    return result;
+    // return result;
 }
 
 byte MCP4131::writeWiper(unsigned int wiperValue) {
@@ -99,7 +99,12 @@ void MCP4131::sendCommand(byte address, char command, unsigned int data) {
     byte transferByte = (address << 4) | ((command << 2) | COMMAND_MASK);
 
     SPI.transfer(transferByte);
-    SPI.transfer(data);
+    byte result = SPI.transfer(data);
+
+    Serial.println(result);
+
+
+    
 
     // take the SS pin high to de-select the chip:
     disableChip();
