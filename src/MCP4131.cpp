@@ -21,7 +21,7 @@ byte MCP4131::readWiper() {
     return sendCommand(ADDRESS_WIPER0, COMMAND_READ, 255);
 }
 
-void MCP4131::writeWiper(unsigned int wiperValue) {
+void MCP4131::writeWiper(unsigned int wiperValue) {  
     sendCommand(ADDRESS_WIPER0, COMMAND_WRITE, wiperValue);
 }
 
@@ -33,7 +33,6 @@ void MCP4131::sendCommand(byte address, char command) {
     enableChip();
     
     byte msb = (address << 4) | ((command << 2) | COMMAND_MASK);
-    Serial.println(msb);
 
     SPI.transfer(msb);
 
